@@ -286,7 +286,7 @@ class Decoder(nn.Module):
             x = upsample(x)
 
         x = self.final_res_block(x)
-        return self.final_conv(x)
+        return self.final_conv(x).tanh()
 
 
 class NLayerDiscriminator(nn.Module):

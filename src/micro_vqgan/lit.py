@@ -79,13 +79,6 @@ class LitVQGan(L.LightningModule):
         self.perceptual_loss = LearnedPerceptualImagePatchSimilarity(
             net_type="vgg", normalize=False, reduction="mean"
         )
-        self._lpips_shift: torch.Tensor
-        self._lpips_scale: torch.Tensor
-        self.register_buffer('_lpips_shift', torch.tensor([-.030, -.088, -.188])[None, :, None, None])
-        self.register_buffer('_lpips_scale', torch.tensor([.458, .448, .450])[None, :, None, None])
-
-    def _scale_for_lpips(self, x: torch.Tensor) -> torch.Tensor:
-        return (x - self._lpips_shift) / self._lpips_scale
 
     def encode(self, x: torch.Tensor) -> tuple[torch.Tensor, ...]:
         h = self.pre_quant_conv(self.encoder(x))
@@ -126,7 +119,7 @@ class LitVQGan(L.LightningModule):
         y, codebook_loss, indices = self.forward(x)
 
         l_rec = (x - y).abs().mean()
-        l_perceptual = self.perceptual_loss(self._scale_for_lpips(x), self._scale_for_lpips(y))
+        l_perceptual = self.perceptual_loss(x, y)
         nll = l_rec + self.perceptual_weight * l_perceptual
 
         # Generator step
@@ -192,7 +185,7 @@ class LitVQGan(L.LightningModule):
         y, codebook_loss, indices = self.forward(x)
 
         l_rec = (x - y).abs().mean()
-        l_perceptual = self.perceptual_loss(self._scale_for_lpips(x), self._scale_for_lpips(y))
+        l_perceptual = self.perceptual_loss(x, y)
         nll = l_rec + self.perceptual_weight * l_perceptual
 
         encodings = F.one_hot(indices, self.codebook.embedding.num_embeddings).float()
