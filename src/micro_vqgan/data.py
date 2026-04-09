@@ -49,10 +49,9 @@ class CelebADataModule(L.LightningDataModule):
         self.drop_last = drop_last
 
     def setup(self, stage: str = ""):
-        dataset = load_dataset("huggan/celebahq-256")
-        split = dataset["train"].train_test_split(test_size=0.01, seed=42)
-        self.train_dataset = split["train"].with_transform(_apply_train_transforms)
-        self.val_dataset = split["test"].with_transform(_apply_val_transforms)
+        dataset = load_dataset("mattymchen/celeba-hq")
+        self.train_dataset = dataset["train"].with_transform(_apply_train_transforms)
+        self.val_dataset = dataset["validation"].with_transform(_apply_val_transforms)
 
     def train_dataloader(self):
         return DataLoader(

@@ -288,6 +288,15 @@ wheels = [
 ]
 
 [[package]]
+name = "docstring-parser"
+version = "0.17.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/b2/9d/c3b43da9515bd270df0f80548d9944e389870713cc1fe2b8fb35fe2bcefd/docstring_parser-0.17.0.tar.gz", hash = "sha256:583de4a309722b3315439bb31d64ba3eebada841f2e2cee23b99df001434c912", size = 27442, upload-time = "2025-07-21T07:35:01.868Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/55/e2/2537ebcff11c1ee1ff17d8d0b6f4db75873e3b0fb32c2d4a2ee31ecb310a/docstring_parser-0.17.0-py3-none-any.whl", hash = "sha256:cf2569abd23dce8099b300f9b4fa8191e9582dda731fd533daf54c4551658708", size = 36896, upload-time = "2025-07-21T07:35:00.684Z" },
+]
+
+[[package]]
 name = "einops"
 version = "0.8.2"
 source = { registry = "https://pypi.org/simple" }
@@ -475,6 +484,15 @@ wheels = [
 ]
 
 [[package]]
+name = "importlib-resources"
+version = "6.5.2"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/cf/8c/f834fbf984f691b4f7ff60f50b514cc3de5cc08abfc3295564dd89c5e2e7/importlib_resources-6.5.2.tar.gz", hash = "sha256:185f87adef5bcc288449d98fb4fba07cea78bc036455dd44c5fc4a2fe78fed2c", size = 44693, upload-time = "2025-01-03T18:51:56.698Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a4/ed/1f1afb2e9e7f38a545d628f864d562a5ae64fe6f7a10e28ffb9b185b4e89/importlib_resources-6.5.2-py3-none-any.whl", hash = "sha256:789cfdc3ed28c78b67a06acb8126751ced69a3d5f79c095a98298cd8a760ccec", size = 37461, upload-time = "2025-01-03T18:51:54.306Z" },
+]
+
+[[package]]
 name = "jinja2"
 version = "3.1.6"
 source = { registry = "https://pypi.org/simple" }
@@ -484,6 +502,24 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/df/bf/f7da0350254c0ed7c72f3e33cef02e048281fec7ecec5f032d4aac52226b/jinja2-3.1.6.tar.gz", hash = "sha256:0137fb05990d35f1275a587e9aee6d56da821fc83491a0fb838183be43f66d6d", size = 245115, upload-time = "2025-03-05T20:05:02.478Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/62/a1/3d680cbfd5f4b8f15abc1d571870c5fc3e594bb582bc3b64ea099db13e56/jinja2-3.1.6-py3-none-any.whl", hash = "sha256:85ece4451f492d0c13c5dd7c13a64681a86afae63a5f347908daf103ce6d2f67", size = 134899, upload-time = "2025-03-05T20:05:00.369Z" },
+]
+
+[[package]]
+name = "jsonargparse"
+version = "4.47.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "pyyaml" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/f0/55/cb2efc27c07d4002bea7705b866bd10d5f63261fca06163ee8b17c608cc8/jsonargparse-4.47.0.tar.gz", hash = "sha256:d4a7b71ecd92695147650cf896a317cd0b34f3e48e52559382964e60fa67371f", size = 226021, upload-time = "2026-03-21T09:07:43.202Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/a3/57/e5153ad1e9d9ad7554aa96bfa9bbd037fc3b06fd910810e9ab9d0b1dff82/jsonargparse-4.47.0-py3-none-any.whl", hash = "sha256:b038671662c1073b4a7045aa29c868e8485abe81c09ffc6716e6deff31c3cf25", size = 129061, upload-time = "2026-03-13T11:52:07.383Z" },
+]
+
+[package.optional-dependencies]
+signatures = [
+    { name = "docstring-parser" },
+    { name = "typeshed-client" },
 ]
 
 [[package]]
@@ -578,6 +614,7 @@ source = { editable = "." }
 dependencies = [
     { name = "datasets" },
     { name = "einops" },
+    { name = "jsonargparse", extra = ["signatures"] },
     { name = "lightning" },
     { name = "torch", version = "2.11.0", source = { registry = "https://pypi.org/simple" }, marker = "sys_platform != 'linux' and sys_platform != 'win32'" },
     { name = "torch", version = "2.11.0+cu130", source = { registry = "https://download.pytorch.org/whl/cu130" }, marker = "sys_platform == 'linux' or sys_platform == 'win32'" },
@@ -591,6 +628,7 @@ dependencies = [
 requires-dist = [
     { name = "datasets", specifier = ">=4.8.4" },
     { name = "einops", specifier = ">=0.8.2" },
+    { name = "jsonargparse", extras = ["signatures"], specifier = ">=4.47.0" },
     { name = "lightning", specifier = ">=2.6.1" },
     { name = "torch", marker = "sys_platform != 'linux' and sys_platform != 'win32'", specifier = ">=2.11.0" },
     { name = "torch", marker = "sys_platform == 'linux' or sys_platform == 'win32'", specifier = ">=2.11.0", index = "https://download.pytorch.org/whl/cu130" },
@@ -1424,6 +1462,19 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/f5/24/cb09efec5cc954f7f9b930bf8279447d24618bb6758d4f6adf2574c41780/typer-0.24.1.tar.gz", hash = "sha256:e39b4732d65fbdcde189ae76cf7cd48aeae72919dea1fdfc16593be016256b45", size = 118613, upload-time = "2026-02-21T16:54:40.609Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/4a/91/48db081e7a63bb37284f9fbcefda7c44c277b18b0e13fbc36ea2335b71e6/typer-0.24.1-py3-none-any.whl", hash = "sha256:112c1f0ce578bfb4cab9ffdabc68f031416ebcc216536611ba21f04e9aa84c9e", size = 56085, upload-time = "2026-02-21T16:54:41.616Z" },
+]
+
+[[package]]
+name = "typeshed-client"
+version = "2.9.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "importlib-resources" },
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/71/34/e9fcb7ebbace96b6ab0f397df47dad7e42d8819aa091bc6c4ea1e7f9226b/typeshed_client-2.9.0.tar.gz", hash = "sha256:9c2659a4ba11a9d8597d63770416b42c69861189bf861809f6443d329c84be3a", size = 521553, upload-time = "2026-03-01T18:25:57.658Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/86/50/42c0cadd4d62b0d98929db479346b7da6e4ab8346a4de39ed80176fb39b7/typeshed_client-2.9.0-py3-none-any.whl", hash = "sha256:9383660241a4864fd4af971e533b735bd8c5b3d2f88f7ac279e41699ebe1369c", size = 786547, upload-time = "2026-03-01T18:25:55.976Z" },
 ]
 
 [[package]]
