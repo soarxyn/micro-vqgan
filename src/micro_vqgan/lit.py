@@ -74,6 +74,7 @@ class LitVQGan(L.LightningModule):
         self.codebook_weight = codebook_weight
         self.discriminator_weight = discriminator_weight
         self.discriminator_starting_step = discriminator_starting_step
+        self.image_size = image_size
 
         self.perceptual_loss = LearnedPerceptualImagePatchSimilarity(
             net_type="vgg", normalize=True, reduction="mean"
@@ -178,6 +179,30 @@ class LitVQGan(L.LightningModule):
             self.log("train/disc_loss", disc_loss, on_step=True, on_epoch=False)
 
         opt_disc.step()
+
+    def validation_step(self, batch, _):
+        x = batch["pixel_values"]
+        y, codebook_loss, indices = self.forward(x)
+
+        l_rec = (x - y).abs().mean()
+        l_perceptual = self.perceptual_loss(x, y)
+        nll = l_rec + self.perceptual_weight * l_perceptual
+
+        encodings = F.one_hot(indices, self.codebook.embedding.num_embeddings).float()
+        avg_probs = encodings.mean(0)
+        perplexity = torch.exp(-torch.sum(avg_probs * torch.log(avg_probs + 1e-10)))
+
+        self.log_dict(
+            {
+                "val/l_rec": l_rec,
+                "val/l_perceptual": l_perceptual,
+                "val/nll": nll,
+                "val/codebook_loss": codebook_loss.mean(),
+                "val/perplexity": perplexity,
+            },
+            on_step=False,
+            on_epoch=True,
+        )
 
     def train(self, mode: bool = True) -> Self:
         super().train(mode)
