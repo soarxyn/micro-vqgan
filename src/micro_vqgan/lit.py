@@ -77,7 +77,7 @@ class LitVQGan(L.LightningModule):
         self.image_size = image_size
 
         self.perceptual_loss = LearnedPerceptualImagePatchSimilarity(
-            net_type="vgg", normalize=True, reduction="mean"
+            net_type="vgg", normalize=False, reduction="mean"
         )
 
     def encode(self, x: torch.Tensor) -> tuple[torch.Tensor, ...]:

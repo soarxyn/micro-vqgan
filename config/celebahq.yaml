@@ -33,7 +33,6 @@ trainer:
   max_steps: 1000000
   precision: bf16-mixed
   log_every_n_steps: 100
-  val_check_interval: 5000
   logger:
     class_path: lightning.pytorch.loggers.WandbLogger
     init_args:
