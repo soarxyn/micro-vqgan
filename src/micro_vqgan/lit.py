@@ -204,6 +204,11 @@ class LitVQGan(L.LightningModule):
             on_epoch=True,
         )
 
+    def predict_step(self, batch, batch_idx):
+        x = batch["pixel_values"]
+        _, _, indices = self.encode(x)
+        return indices
+
     def train(self, mode: bool = True) -> Self:
         super().train(mode)
         self.perceptual_loss.eval()

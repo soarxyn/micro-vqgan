@@ -52,6 +52,7 @@ class CelebADataModule(L.LightningDataModule):
         dataset = load_dataset("mattymchen/celeba-hq")
         self.train_dataset = dataset["train"].with_transform(_apply_train_transforms)
         self.val_dataset = dataset["validation"].with_transform(_apply_val_transforms)
+        self.predict_dataset = dataset["train"].with_transform(_apply_val_transforms)
 
     def train_dataloader(self):
         return DataLoader(
@@ -62,6 +63,17 @@ class CelebADataModule(L.LightningDataModule):
             persistent_workers=self.num_workers > 1,
             shuffle=True,
             drop_last=self.drop_last,
+        )
+
+    def predict_dataloader(self):
+        return DataLoader(
+            self.predict_dataset,  # type: ignore
+            batch_size=self.batch_size,
+            num_workers=self.num_workers,
+            pin_memory=self.pin_memory,
+            persistent_workers=self.num_workers > 1,
+            shuffle=False,
+            drop_last=False,
         )
 
     def val_dataloader(self):
