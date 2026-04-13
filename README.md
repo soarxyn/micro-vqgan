@@ -42,7 +42,7 @@ A clean PyTorch implementation of a Vector Quantized GAN (VQGAN) image tokenizer
 
 ![Latent interpolation](docs/latent_interp.png)
 
-*Linear interpolation between two images in the quantized embedding space. The decoder produces smooth, photorealistic transitions, demonstrating that the learned codebook forms a well-structured latent manifold.*
+*Linear interpolation between two images in the latent space results in a smooth lerp between the two original images.*
 
 ## Features
 
