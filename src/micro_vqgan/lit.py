@@ -91,9 +91,8 @@ class LitVQGan(L.LightningModule):
         return self.decoder(h)
 
     def forward(self, x: torch.Tensor) -> tuple[torch.Tensor, ...]:
-        h = self.pre_quant_conv(self.encoder(x))
-        x_q, codebook_loss, indices = self.codebook(h)
-        h = self.decoder(self.post_quant_conv(x_q))
+        x_q, codebook_loss, indices = self.encode(x)
+        h = self.decode(x_q)
 
         return h, codebook_loss, indices
 
