@@ -26,7 +26,7 @@ class Codebook(nn.Module):
             + self.embedding.weight.square().sum(dim=1)
             - 2 * x_flattened @ self.embedding.weight.t()
         )
-        indices = distances.argmin(dim=1)
+        indices = distances.argmin(dim=1).view(*x.shape[:3])
 
         x_q: torch.Tensor = self.embedding(indices).view(x.shape)
 
