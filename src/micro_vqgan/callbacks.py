@@ -16,9 +16,21 @@ class LatentWriter(BasePredictionWriter):
         super().__init__(write_interval="batch")
         self.output_dir = output_dir
 
-    def write_on_batch_end(self, trainer, pl_module, prediction, batch_indices, batch, batch_idx, dataloader_idx):
+    def write_on_batch_end(
+        self,
+        trainer,
+        pl_module,
+        prediction,
+        batch_indices,
+        batch,
+        batch_idx,
+        dataloader_idx,
+    ):
         os.makedirs(self.output_dir, exist_ok=True)
-        torch.save(prediction.cpu(), os.path.join(self.output_dir, f"batch_{batch_idx:06d}.pt"))
+        torch.save(
+            prediction.to(dtype=torch.int16, device="cpu"),
+            os.path.join(self.output_dir, f"batch_{batch_idx:06d}.pt"),
+        )
 
 
 class SampleCallback(L.Callback):
