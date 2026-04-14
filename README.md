@@ -1,5 +1,6 @@
 # μVQGAN
 
+![Header](docs/header.png)
 *Inspired by Esser et al.'s [Taming Transformers for High-Resolution Image Synthesis](https://compvis.github.io/taming-transformers/).*
 
 A clean PyTorch implementation of a Vector Quantized GAN (VQGAN) image tokenizer, built on top of PyTorch Lightning. Trained on CelebA-HQ at 256×256 and designed as a first-stage encoder for latent diffusion models.
